@@ -41,11 +41,11 @@ const todoList = () => {
           const displayDate = (dueDate === new Date().toISOString().split("T")[0]) ? "toDay": dueDate;
       
           if (dueDate == today) {
-            return `[${isCompleted}] ${title}\n`;
+            return `[${isCompleted}] ${title}`;
           } else if (dueDate >= today) {
-            return `[${isCompleted}] ${title} ${displayDate}\n`;
+            return `[${isCompleted}] ${title} ${displayDate}`;
           } else {
-            return `[${isCompleted}] ${title} ${displayDate}\n\n`;
+            return `[${isCompleted}] ${title} ${displayDate}`;
           }
         });
         return output.join("\n");
