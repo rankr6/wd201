@@ -3,7 +3,7 @@ const todoList = require('../todo');
 const {all, add,markAsComplete,overdue,dueToday,dueLater} = todoList();
 
 describe("TodoList test Check", () => {
-    beforeAll(() => {
+    /*beforeAll(() => {
         add({
             title : "Bought yesterday",
             completed : false,
@@ -19,7 +19,21 @@ describe("TodoList test Check", () => {
             completed : false,
             dueDate : new Date().toISOString().split("T")[0]+1
         });
-    });
+    });*/
+
+    const formattedDate = d => {
+        return d.toISOString().split("T")[0]
+      }
+      
+      var dateToday = new Date()
+      const today = formattedDate(dateToday)
+      const yesterday = formattedDate(
+        new Date(new Date().setDate(dateToday.getDate() - 1))
+      )
+      const tomorrow = formattedDate(
+        new Date(new Date().setDate(dateToday.getDate() + 1))
+      )
+
     test("Check add test",() => {
         const addcounts = all.length;
         add({
@@ -38,17 +52,42 @@ describe("TodoList test Check", () => {
     test("Check re-overdue items", () =>{
         const overlength = overdue().length;
         expect(overdue().length).toBe(overlength);
+        add({
+            title : "Bought yesterday",
+            completed : false,
+            dueDate : yesterday
+        });
+        expect(overdue().length).toBe(overlength+1);
+
     });
 
     test("Check re-today items", () =>{
         const daylength = dueToday().length;
         expect(dueToday().length).toBe(daylength);
+        add(
+            {
+                title : "Buy Today",
+                completed : false,
+                dueDate : today
+            }
+        );
+        expect(dueToday().length).toBe(daylength+1);
     });
 
     test("Check re-duelater items", () =>{
         const laterlength = dueLater().length;
         expect(dueLater().length).toBe(laterlength);
+        add(
+            {
+                title : "Buy Tomorow",
+                completed : false,
+                dueDate : tomorrow
+            }
+        );
+        expect(dueLater().length).toBe(laterlength+1);
     });
 });
+
+
 
 
