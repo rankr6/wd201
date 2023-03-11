@@ -31,38 +31,36 @@ const todoList = () => {
       }
     
   
-    const toDisplayableList = (list) => {
-      let output = "";
-      const toDay = new Date();
-      list.forEach((item)=>{
-        const title = item.title;
-        const dueDate = item.dueDate;
-        const isCompleted = item.completed;
-        const displayDate = (dueDate === new Date().toISOString().split("T")[0]) ? "toDay": dueDate;
-        if(dueDate==today){
-            output+= `[${isCompleted ? "x":" "}] ${title}\n`;
-        }
-        else if(dueDate>=today){
-            output+= `[${isCompleted ? "x":" "}] ${title} ${displayDate}\n`;   
-        }
-        else{
-            output+= `[${isCompleted ? "x":" "}] ${title} ${displayDate}\n\n`;
-        }
-
-        
-      });
-      return output;
+      const toDisplayableList = (list) => {
+        const toDay = new Date();
+      
+        const output = list.map((item) => {
+          const title = item.title;
+          const dueDate = item.dueDate === new Date().toLocaleDateString("en-CA") ? "" : item.dueDate;
+          const isCompleted = item.completed ? "[x]" : "";
+          const displayDate = (dueDate === new Date().toISOString().split("T")[0]) ? "toDay": dueDate;
+      
+          if (dueDate == today) {
+            return `[${isCompleted}] ${title}\n`;
+          } else if (dueDate >= today) {
+            return `[${isCompleted}] ${title} ${displayDate}\n`;
+          } else {
+            return `[${isCompleted}] ${title} ${displayDate}\n\n`;
+          }
+        });
+        return output.join("\n");
+      }
+    
+      return {
+        all,
+        add,
+        markAsComplete,
+        overdue,
+        dueToday,
+        dueLater,
+        toDisplayableList
+      };
+    
     }
   
-    return {
-      all,
-      add,
-      markAsComplete,
-      overdue,
-      dueToday,
-      dueLater,
-      toDisplayableList
-    };
-  };
-  
-  module.exports = todoList;
+ module.exports = todoList;
