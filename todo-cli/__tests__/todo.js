@@ -51,7 +51,7 @@ describe("TodoList test Check", () => {
 
     test("Check re-overdue items", () =>{
         const overlength = overdue().length;
-        expect(overdue().length).toBe(overlength);
+        
         add({
             title : "Bought yesterday",
             completed : false,
@@ -63,7 +63,7 @@ describe("TodoList test Check", () => {
 
     test("Check re-today items", () =>{
         const daylength = dueToday().length;
-        expect(dueToday().length).toBe(daylength);
+        
         add(
             {
                 title : "Buy Today",
@@ -76,7 +76,7 @@ describe("TodoList test Check", () => {
 
     test("Check re-duelater items", () =>{
         const laterlength = dueLater().length;
-        expect(dueLater().length).toBe(laterlength);
+        
         add(
             {
                 title : "Buy Tomorow",
