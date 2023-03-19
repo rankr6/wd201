@@ -48,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
         const over_find = await Todo.findAll({
           where:{
             dueDate : {
-              [Op.lt] : new new Date().toISOString().slice(0,10)
+              [Op.lt] : new new Date().toISOString().slice(0,10),
+              completed:false
             },
           },
         });
@@ -109,8 +110,14 @@ module.exports = (sequelize, DataTypes) => {
 
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
-      return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
-    }
+      let today =this.dueDate === new Date().toLocaleDateString("en-CA")? "": this.dueDate;
+      if(dueDate==today)
+      {
+        return `${this.id}. ${checkbox} ${this.title}`;
+      }
+      else{
+        return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
+      }
   }
   Todo.init({
     title: DataTypes.STRING,
