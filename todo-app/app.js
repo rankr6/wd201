@@ -3,6 +3,7 @@ const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 const todo = require("./models/todo");
+const { where } = require("sequelize");
 app.use(bodyParser.json());
 
 app.get("/", function (request, response) {
@@ -53,10 +54,9 @@ app.put("/todos/:id/markAsCompleted", async function (request, response) {
 
 app.delete("/todos/:id", async function (request, response) {
   console.log("We have to delete a Todo with ID: ", request.params.id);
-  const todo = await Todo.deletebyid(request.params.id);
   try {
-    const deletebyid = await todo.deletebyid();
-    return response.json(true);
+    const delbyid = await Todo.destroy({where:{ id : request.params.id }});
+    response.send(delbyid ? true : false);
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
