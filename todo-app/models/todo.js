@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static gettodos(){
-      return this.findAll();
+      return this.findAll({ order: [["id", "ASC"]] });
     }
 
   }

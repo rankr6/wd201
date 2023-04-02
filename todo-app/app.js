@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.set("view engine","ejs");
 
-app.use(express.static(path.join(__dirname,"views")))
+app.use(express.static(path.join(__dirname,"public")))
 
 
 
@@ -38,13 +38,11 @@ app.get("/", async function (request, response) {
   const allTodos = await Todo.gettodos();
   if(request.accepts("html")){
     response.render("index",{
-      allTodos
+      allTodos,
     });
   }
   else{
-    response.json({
-      allTodos
-    });
+    response.json(allTodos);
   }
 });
 
