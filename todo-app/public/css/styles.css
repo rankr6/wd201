@@ -1,5 +1,8 @@
 body{
-    background-color: yellow;
-    color: grey;
-    font-family: Arial;
+    font-family: sans-serif;
+    background-color: white;
+}
+
+.Todo-Item:hover .trash-icon{
+    display: block;
 }
