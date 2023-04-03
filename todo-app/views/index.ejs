@@ -5,12 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/styles.css">
-    <title>Home Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>To-do manager</title>
 </head>
 <body>
-    <%- include('header.ejs') %>
-    <%- include('todos.ejs') %>
-    <%- include('footer.ejs') %>
+    <div>
+        <div>
+            <%- include('header.ejs') %>
+        </div>
+        <div>
+            <%- include('todos.ejs',{allTodos:allTodos}) %>
+        </div>
+        <div>
+            <%- include('footer.ejs') %>
+        </div>
+    </div>
+    
+    
+    
 
 </body>
 </html>
