@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Op } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -19,10 +19,15 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ completed: true });
     }
 
-    static gettodos(){
-      return this.findAll({ order: [["id", "ASC"]] });
+    static async odue(){
+      return this.findAll({where:{dueDate:{[Op.lt] : new Date()},},});
     }
-
+    static async tdue(){
+      return this.findAll({where:{dueDate:{[Op.eq] : new Date()},},});
+    }
+    static async ldue(){
+      return this.findAll({where:{dueDate:{[Op.gt] : new Date()},},});
+    }
   }
   Todo.init(
     {

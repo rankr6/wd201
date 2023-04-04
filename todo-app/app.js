@@ -35,14 +35,19 @@ app.get("/todos/:id", async function (request, response) {
 });
 
 app.get("/", async function (request, response) {
-  const allTodos = await Todo.gettodos();
+  const odue = await Todo.odue();
+  const tdue = await Todo.tdue();
+  const ldue = await Todo.ldue();
+
   if(request.accepts("html")){
     response.render("index",{
-      allTodos,
+      odue,tdue,ldue,
     });
   }
   else{
-    response.json(allTodos);
+    response.json({
+      odue,tdue,ldue,
+    });
   }
 });
 
