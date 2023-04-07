@@ -28,6 +28,13 @@ module.exports = (sequelize, DataTypes) => {
     static async ldue(){
       return this.findAll({where:{dueDate:{[Op.gt] : new Date()},},});
     }
+    static async remove(id){
+      return this.destroy({
+        where:{
+          id,
+        },
+      });
+    }
   }
   Todo.init(
     {

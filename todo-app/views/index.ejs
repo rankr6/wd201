@@ -6,6 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        function updateTodo (id) {
+        fetch(`/todos/${id}/markAsCompleted`,
+        {
+        method: "put",
+        headers:{ "Content-Type" : "application/json" },
+        })
+        .then((res) => {
+            if(res.ok){
+                window.location.reload();
+            }
+        })
+        .catch((err) => console.error(err));
+        }
+        function deleteTodo (id) {
+        fetch(`/todos/${id}`,
+        {
+        method: "delete",
+        headers:{ "Content-Type" : "application/json" },
+        })
+        .then((res) => {
+            if(res.ok){
+                window.location.reload();
+            }
+        })
+        .catch((err) => console.error(err));
+        }
+        </script>
     <title>To-do manager</title>
 </head>
 <body>
@@ -15,7 +43,22 @@
                 <%- include('header.ejs') %>
             </div>
             <div class="col-start-3 col-span-2">
-                <%- include('todos.ejs') %>
+                <form action="/todos" method="post">
+                    <div class="flex gap-2 py-4">
+                        <div class="flex-auto">
+                            <input type="text" name="title" placeholder="What's next?" class="border border-gray-300 leading-4 rounded text-gray-900 w-full text-sm p-2" required >
+                        </div>
+                        <div class="flex-auto">
+                            <input type="date" name="dueDate" class="border border-gray-300 rounded leading-4 text-gray-900 w-full text-sm p-2">
+                        </div>
+                        <div>
+                            <button type="submit" class="bg-green-600 px-5 py-1.5 mr-2 font-medium text-white rounded">Add</button>
+                        </div>
+                    </div>
+                </form>
+                <%- include('todos.ejs',{title:"Overdue",data:odue}) %>
+                <%- include('todos.ejs',{title:"Due Today",data:tdue}) %>
+                <%- include('todos.ejs',{title:"Due Later",data:ldue}) %>
             </div>
             <div class="col-start-3 col-span-2">
                 <%- include('footer.ejs') %>
