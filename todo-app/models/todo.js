@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       return this.update({ completed: true });
     }
 
+    delete() {
+      return this.destroy();
+    }
+
     static async odue(){
       return this.findAll({where:{dueDate:{[Op.lt] : new Date()},},});
     }
@@ -36,9 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
 
-    removebyid() {
-      return this.destroy();
-    }
+    
     
 
     static async completedItems(){

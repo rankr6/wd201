@@ -91,7 +91,7 @@ describe("Todo Application", function () {
     res = await agent.get("/");
     csrfToken = extractCsrfToken(res);
 
-    const deletedResponse = await agent.removebyid(`/todos/${latestTodo.id}`).send({
+    const deletedResponse = await agent.delete(`/todos/${latestTodo.id}`).send({
       _csrf: csrfToken,
     });
     expect(deletedResponse.statusCode).toBe(200);
