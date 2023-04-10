@@ -24,13 +24,27 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static async odue(){
-      return this.findAll({where:{dueDate:{[Op.lt] : new Date()},},});
+      return this.findAll({
+        where:{
+          dueDate:{[Op.lt]:new Date()},
+          completed:false,
+        }
+      });
     }
     static async tdue(){
-      return this.findAll({where:{dueDate:{[Op.eq] : new Date()},},});
-    }
+      return this.findAll({
+        where:{
+          dueDate:{[Op.eqt]:new Date()},
+          completed:false,
+        }
+      });    }
     static async ldue(){
-      return this.findAll({where:{dueDate:{[Op.gt] : new Date()},},});
+      return this.findAll({
+        where:{
+          dueDate:{[Op.gt]:new Date()},
+          completed:false,
+        }
+      });
     }
     static async remove(id){
       return this.destroy({
