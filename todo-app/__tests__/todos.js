@@ -68,6 +68,35 @@ describe("Todo Application", function () {
 
   });
 
+  test("Mark a todo as incomplete", async () => {
+    let res = await agent.get("/");
+    let csrfToken = extractCsrfToken(res);
+    await agent.post("/todos").send({
+      title: "Buy milk",
+      dueDate: new Date().toISOString(),
+      completed: false,
+      _csrf: csrfToken,
+    });
+
+    const groupedTodosResponse = await agent
+      .get("/")
+      .set("Accept", "application/json");
+    const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text);
+    const dueTodayCount = parsedGroupedResponse.tdue.length;
+    const latestTodo = parsedGroupedResponse.tdue[dueTodayCount - 1];
+
+    res = await agent.get("/");
+    csrfToken = extractCsrfToken(res);
+
+    let markinCompleteResponse = await agent.put(`/todos/${latestTodo.id}/`).send({
+        _csrf: csrfToken,
+        completed: false,
+      });
+    let parsedUpdateResponse = JSON.parse(markinCompleteResponse.text);
+    expect(parsedUpdateResponse.completed).toBe(false);
+
+  });
+
 
   
 
