@@ -9,39 +9,41 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User,{
+        foreignKey: 'userId',
+      })
     }
 
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
+    static addTodo({ title, dueDate, userId }) {
+      return this.create({ title: title, dueDate: dueDate, completed: false, userId });
     }
 
     markAsCompleted() {
       return this.update({ completed: true });
     }
 
-    delete() {
-      return this.destroy();
-    }
-
-    static async odue(){
+    static async odue(userId){
       return this.findAll({
         where:{
           dueDate:{[Op.lt]:new Date()},
+          userId,
           completed:false,
         }
       });
     }
-    static async tdue(){
+    static async tdue(userId){
       return this.findAll({
         where:{
           dueDate:{[Op.eqt]:new Date()},
+          userId,
           completed:false,
         }
       });    }
-    static async ldue(){
+    static async ldue(userId){
       return this.findAll({
         where:{
           dueDate:{[Op.gt]:new Date()},
+          userId,
           completed:false,
         }
       });
@@ -50,6 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       return this.destroy({
         where:{
           id,
+          
         },
       });
     }
@@ -57,9 +60,12 @@ module.exports = (sequelize, DataTypes) => {
     
     
 
-    static async completedItems(){
+    static async completedItems(userId){
       return this.findAll({
-        where:{completed:true}
+        where:{
+          completed:true,
+          userId,
+        },
       });
     }
 
