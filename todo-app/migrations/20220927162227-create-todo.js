@@ -14,15 +14,12 @@ module.exports = {
         allowNull: false,
         validate: {
           notNull: true,
-          notEmpty,
           len:"5",
         },
       },
       dueDate: {
         type: Sequelize.DATEONLY,
         allowNull:false,
-        validate:{
-          notEmpty,
       },
       completed: {
         type: Sequelize.BOOLEAN
