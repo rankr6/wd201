@@ -73,15 +73,10 @@ describe("Todo Application", function () {
     expect(response.statusCode).toBe(302);
   });
 
-<<<<<<< HEAD
   test("Mark a todo as complete", async () => {
-    let res = await agent.get("/");
-=======
-  test("Mark a todo as incomplete", async () => {
     const agent = request.agent(server);
     await login(agent, "user.a@gmail.com", "12345678");
     let res = await agent.get("/todo");
->>>>>>> 614d5da (For L10)
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
       title: "Buy milk",
@@ -109,8 +104,12 @@ describe("Todo Application", function () {
 
   });
 
+ 
+
   test("Mark a todo as incomplete", async () => {
-    let res = await agent.get("/");
+    const agent = request.agent(server);
+    await login(agent, "user.a@gmail.com", "12345678");
+    let res = await agent.get("/todo");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
       title: "Buy milk",
@@ -120,13 +119,13 @@ describe("Todo Application", function () {
     });
 
     const groupedTodosResponse = await agent
-      .get("/")
+      .get("/todo")
       .set("Accept", "application/json");
     const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text);
     const dueTodayCount = parsedGroupedResponse.tdue.length;
     const latestTodo = parsedGroupedResponse.tdue[dueTodayCount - 1];
 
-    res = await agent.get("/");
+    res = await agent.get("/todo");
     csrfToken = extractCsrfToken(res);
 
     let markinCompleteResponse = await agent.put(`/todos/${latestTodo.id}/`).send({
