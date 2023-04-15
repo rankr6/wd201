@@ -135,9 +135,9 @@ app.get("/todo",connectEnsureLogin.ensureLoggedIn(), async function (request, re
   }
 });
 
-<<<<<<< HEAD
-app.post("/todos", async (request, response) => { 
-=======
+
+//app.post("/todos", async (request, response) => { 
+
 app.get("/signup",(request,response)=> {
   response.render("signup",{title:"Signup", csrfToken: request.csrfToken()})
 })
@@ -163,7 +163,6 @@ app.post("/todos",connectEnsureLogin.ensureLoggedIn(), async (request, response)
     request.flash("error", "Due date can not be empty!");
     return response.redirect("/todo");
   }
->>>>>>> 614d5da (For L10)
   console.log("Creating a todo", request.body);
   try {
   const todo = await Todo.addTodo ({
